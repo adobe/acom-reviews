@@ -2,4 +2,12 @@ import * as React from 'react';
 import { render } from 'react-dom';
 import Review from './components/Review';
 
-render(<Review />, document.getElementById('root'));
+const selectedRating = document.getElementById('selectedRating');
+
+const onRatingSet = (rating, comment) => {
+    selectedRating.innerText = `
+        Rating: ${rating}
+        Comment: ${comment}
+    `;
+};
+render(<Review averageRating="4.5" onRatingSet={onRatingSet} />, document.getElementById('root'));
