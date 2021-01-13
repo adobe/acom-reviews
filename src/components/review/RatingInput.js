@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useHover from '../utils/useHover';
+import useHover from '../../utils/useHover';
 
 const RatingInput = ({ className, index, onClick, onHover }) => {
     const [hoverRef, isHovered] = useHover();
