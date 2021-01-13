@@ -1,13 +1,5 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import Review from './components/Review';
+import HelixReview from './components/helixReview/HelixReview';
 
-const selectedRating = document.getElementById('selectedRating');
-
-const onRatingSet = (rating, comment) => {
-    selectedRating.innerText = `
-        Rating: ${rating}
-        Comment: ${comment}
-    `;
-};
-render(<Review averageRating="4.5" onRatingSet={onRatingSet} />, document.getElementById('root'));
+render(<HelixReview />, document.getElementById('root'));
