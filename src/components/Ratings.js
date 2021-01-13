@@ -1,21 +1,18 @@
 import React from 'react';
+import RatingInput from './RatingInput';
 
-function Ratings({ count, rating, onChange }) {
+function Ratings({ count, rating, onClick, onHover }) {
     const ratings = [];
     for (let i = 1; i < count + 1; i += 1) {
         const className = i <= rating ? 'is-Active' : '';
         ratings.push(
-            <React.Fragment key={i}>
-                <input
-                    type="radio"
-                    id={`rating-${i}`}
-                    className={className}
-                    name="rating"
-                    value={i}
-                    onClick={() => onChange(i)}
-                />
-                <label htmlFor={`rating-${i}`}>{i}</label>
-            </React.Fragment>
+            <RatingInput
+                key={`rating-${i}`}
+                className={className}
+                index={i}
+                onClick={onClick}
+                onHover={onHover}
+            />
         );
     }
     return <fieldset className="hlx-Review-ratingFields">{ratings}</fieldset>;
