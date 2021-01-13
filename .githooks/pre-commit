@@ -1,0 +1,13 @@
+#!/bin/sh
+# Verify files are formatted and passing
+
+npm run build
+if [ $? -eq 0 ]
+then
+  exit 0
+else
+	cat <<\EOF
+Tests or Build Failed.  Please see error message above and fix.
+EOF
+	exit 1
+fi
