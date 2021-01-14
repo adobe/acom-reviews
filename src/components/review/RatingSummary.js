@@ -1,7 +1,7 @@
 import React from 'react';
 
 function RatingSummary({
-    averageRating,
+    averageRating = 0,
     maxRating,
     totalReviews,
     reviewString,
@@ -10,7 +10,7 @@ function RatingSummary({
     // placeholder
     return (
         <div className="hlx-ReviewStats is-Visible">
-            <span className="hlx-ReviewStats-average">{averageRating}</span>
+            <span className="hlx-ReviewStats-average">{averageRating.toFixed(1)}</span>
             <span className="hlx-ReviewStats-separator">/</span>
             <span className="hlx-ReviewStats-outOf">{maxRating}</span>
             <span className="hlx-ReviewStats-separator">-</span>

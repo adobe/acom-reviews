@@ -41,6 +41,7 @@
         "react/prop-types": [0],
         "react/react-in-jsx-scope": "off",
         "react/jsx-closing-tag-location": "off",
+        "react/jsx-equals-spacing": "off",
         "react/jsx-props-no-multi-spaces": "off",
         "react/jsx-indent": "off",
         "react/jsx-indent-props": "off",
