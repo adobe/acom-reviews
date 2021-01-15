@@ -132,10 +132,15 @@ function Review({
                             reviewStringPlural={reviewStringPlural}
                         />
                     )}
-                    <span className="hlx-resetForm"><a href="#"></a></span>
+                    <span className="hlx-resetForm">
+                        {/* eslint-disable-next-line */}
+                        <a href="#" />
+                    </span>
                 </>
             )}
-            {displayThankYou && <div className="hlx-submitResponse">{thankYouString}</div>}
+            {displayThankYou && (
+                <div className="hlx-submitResponse">{thankYouString}</div>
+            )}
         </div>
     );
 }
