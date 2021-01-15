@@ -13,6 +13,7 @@ const HelixReview = ({
     reviewLocation,
     reviewString = 'vote',
     reviewStringPlural = 'votes',
+    reviewTitle,
     sendCtaText,
     sheet,
     starString = 'star',
@@ -86,6 +87,7 @@ const HelixReview = ({
             placeholderText={placeholderText}
             reviewString={reviewString}
             reviewStringPlural={reviewStringPlural}
+            reviewTitle={reviewTitle}
             sendCtaText={sendCtaText}
             setAverageRating={setAvgRating}
             setTotalReviews={setTotalReviews}

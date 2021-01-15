@@ -114,6 +114,7 @@ h3,
 .hlx-ReviewStats {
     display: none;
     font-size: 16px;
+    font-weight: 200;
     margin-top: 12px;
 
     &.is-Visible {
@@ -127,18 +128,22 @@ h3,
     font-weight: 700;
 }
 
-.hlx-ReviewStats-separator {
-    margin: 0 3px;
+.hlx-ReviewStats-outOf,
+.hlx-ReviewStats-separator,
+.hlx-ReviewStats-total,
+.hlx-ReviewStats-vote {
+    margin-left: 3px;
 }
 
 .hlx-submitResponse {
     font-size: 24px;
+    text-align: center;
 }
 
 .hlx-resetForm {
     position: absolute;
     right: 5%;
-    top: 15px;
+    top: auto;
 
     a {
         background-image: url(../img/x-icon.svg);
@@ -150,7 +155,7 @@ h3,
     }
 }
 
-@media all and (min-width: @size-responsive-desktop) {
+@media screen and (min-width: @size-responsive-desktop) {
 
     .hlx-ReviewWrapper {
         flex-direction: row;

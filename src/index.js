@@ -18,6 +18,7 @@ render(
         lang="en-US"
         postAuth={POST_AUTH}
         reviewLocation={REVIEW_LOCATION}
+        reviewTitle="Rate your experience"
         sheet={SHEET}
         testUrl={TEST_URL}
     />,
