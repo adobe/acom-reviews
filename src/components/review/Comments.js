@@ -11,7 +11,7 @@ function Comments({
             <label htmlFor="rating-comments" />
             <textarea
                 id="rating-comments"
-                maxLength="5"
+                maxLength="1000"
                 name="rating-comments"
                 placeholder={placeholderText}
                 onChange={

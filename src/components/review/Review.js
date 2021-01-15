@@ -16,6 +16,7 @@ function Review({
     placeholderText,
     reviewString = 'vote',
     reviewStringPlural = 'votes',
+    reviewTitle,
     sendCtaText,
     setAverageRating = noop,
     setTotalReviews = noop,
@@ -99,9 +100,10 @@ function Review({
     };
 
     return (
-        <div>
+        <div className="hlx-ReviewWrapper">
             {!displayThankYou && (
                 <>
+                    <h3 className="hlx-reviewTitle">{reviewTitle}</h3>
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
                             ariaProductLabel={ariaProductLabel}
@@ -130,9 +132,10 @@ function Review({
                             reviewStringPlural={reviewStringPlural}
                         />
                     )}
+                    <span className="hlx-resetForm"><a href="#"></a></span>
                 </>
             )}
-            {displayThankYou && <div>{thankYouString}</div>}
+            {displayThankYou && <div className="hlx-submitResponse">{thankYouString}</div>}
         </div>
     );
 }
