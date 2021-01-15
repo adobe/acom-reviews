@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Review from '../Review';
 
@@ -8,32 +8,40 @@ const COMMENT_FIELD_CLASS = 'hlx-Review-commentFields';
 
 test('sets is-Active class on current ratinga and below the clicked rating', () => {
     render(<Review />);
-    userEvent.click(screen.getByLabelText('3'));
-    expect(screen.getByLabelText('5')).not.toHaveClass(ACTIVE_CLASS);
-    expect(screen.getByLabelText('4')).not.toHaveClass(ACTIVE_CLASS);
-    expect(screen.getByLabelText('3')).toHaveClass(ACTIVE_CLASS);
-    expect(screen.getByLabelText('2')).toHaveClass(ACTIVE_CLASS);
-    expect(screen.getByLabelText('1')).toHaveClass(ACTIVE_CLASS);
+    const ratingFields = document.getElementsByClassName('hlx-Review-ratingFields')[0];
+    userEvent.click(ratingFields.childNodes[2]);
+    expect(ratingFields.childNodes[4]).not.toHaveClass(ACTIVE_CLASS);
+    expect(ratingFields.childNodes[3]).not.toHaveClass(ACTIVE_CLASS);
+    expect(ratingFields.childNodes[2]).toHaveClass(ACTIVE_CLASS);
+    expect(ratingFields.childNodes[1]).toHaveClass(ACTIVE_CLASS);
+    expect(ratingFields.childNodes[0]).toHaveClass(ACTIVE_CLASS);
 });
 
 test('Shows comment field when rated below comment threshold', () => {
-    render(<Review commentThreshold={2} />);
+    const getRatingFields = () =>
+        document.getElementsByClassName('hlx-Review-ratingFields')[0];
+    const clickOpt = { clientX: 99, clientY: 99 };
 
-    userEvent.click(screen.getByLabelText('3'));
+    render(<Review commentThreshold={2} />);
+    let ratingFields = getRatingFields();
+    userEvent.click(ratingFields.childNodes[2], clickOpt);
     expect(document.getElementsByClassName(COMMENT_FIELD_CLASS)).toHaveLength(0);
     cleanup();
 
     render(<Review commentThreshold={2} />);
-    userEvent.click(screen.getByLabelText('1'));
+    ratingFields = getRatingFields();
+    userEvent.click(ratingFields.childNodes[0], clickOpt);
     expect(document.getElementsByClassName(COMMENT_FIELD_CLASS)).toHaveLength(1);
     cleanup();
 
     render(<Review commentThreshold={2} />);
-    userEvent.click(screen.getByLabelText('5'));
+    ratingFields = getRatingFields();
+    userEvent.click(ratingFields.childNodes[4], clickOpt);
     expect(document.getElementsByClassName(COMMENT_FIELD_CLASS)).toHaveLength(0);
     cleanup();
 
     render(<Review commentThreshold={2} />);
-    userEvent.click(screen.getByLabelText('2'));
+    ratingFields = getRatingFields();
+    userEvent.click(ratingFields.childNodes[1], clickOpt);
     expect(document.getElementsByClassName(COMMENT_FIELD_CLASS)).toHaveLength(1);
 });
