@@ -3,9 +3,6 @@ import { getLocalStorage, setLocalStorage } from '../../utils/localStorageUtils'
 import sendHelixData from '../../utils/sendHelixData';
 import Review from '../review/Review';
 
-// TODO temp
-const selectedRating = document.getElementById('selectedRating');
-
 const HelixReview = ({
     ariaProductLabel,
     commentThreshold = 3,
@@ -62,12 +59,6 @@ const HelixReview = ({
     };
 
     const onRatingSet = (newRating, comment, updatedTotalReviews) => {
-        // Temp Update -- remove later
-        selectedRating.innerText = `
-            Rating: ${newRating}
-            Comment: ${comment}
-        `;
-
         // When onRatingSet is called, totalReviews hasn't updated yet as it's async
         setLocalStorage(reviewLocation, {
             rating: newRating,
