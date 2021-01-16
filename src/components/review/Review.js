@@ -6,24 +6,29 @@ import RatingSummary from './RatingSummary';
 
 const noop = () => {};
 
+const defaultStrings = {
+    ariaProductLabel: '',
+    sendCta: 'Send',
+    star: 'star',
+    starPlural: 'stars',
+    placeholder: 'Please give us your feedback',
+    review: 'vote',
+    reviewPlural: 'votes',
+    reviewTitle: 'Rate Your Experience',
+    thankYou: 'Thank you for your feedback!',
+};
+
 function Review({
-    ariaProductLabel,
     averageRating,
     commentThreshold = 3,
     displayRatingSummary = true,
     maxRating = 5,
     onRatingSet = noop,
-    placeholderText,
-    reviewString = 'vote',
-    reviewStringPlural = 'votes',
-    reviewTitle,
-    sendCtaText,
+    onRatingHover = noop,
     setAverageRating = noop,
     setTotalReviews = noop,
-    starString = 'star',
-    starStringPlural = 'stars',
+    strings = defaultStrings,
     staticRating,
-    thankYouString = 'Thank you for your feedback!',
     totalReviews,
 }) {
     const [comment, setComment] = useState('');
@@ -43,15 +48,6 @@ function Review({
 
     const handleCommentChange = (commentText) => {
         setComment(commentText);
-    };
-
-    const handleHoverChange = (hoverIndex, isHovered) => {
-        if (!isInteractive) return;
-        if (!isHovered) {
-            setRating(selectedRating);
-        } else {
-            setRating(hoverIndex);
-        }
     };
 
     const handleRatingClick = (newRating, e) => {
@@ -103,23 +99,24 @@ function Review({
         <div className="hlx-ReviewWrapper">
             {!displayThankYou && (
                 <>
-                    <h3 className="hlx-reviewTitle">{reviewTitle}</h3>
+                    <h3 className="hlx-reviewTitle">{strings.reviewTitle}</h3>
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
-                            ariaProductLabel={ariaProductLabel}
+                            ariaProductLabel={strings.ariaProductLabel}
                             count={5}
-                            rating={rating}
+                            isInteractive={isInteractive}
                             onClick={handleRatingClick}
-                            onHover={handleHoverChange}
-                            starString={starString}
-                            starStringPlural={starStringPlural}
+                            onRatingHover={onRatingHover}
+                            selectedRating={rating}
+                            starString={strings.star}
+                            starStringPlural={strings.starPlural}
                         />
                         {displayComments && (
                             <Comments
                                 feedback={comment}
                                 handleCommentChange={handleCommentChange}
-                                placeholderText={placeholderText}
-                                sendCtaText={sendCtaText}
+                                placeholderText={strings.placeholder}
+                                sendCtaText={strings.sendCta}
                             />
                         )}
                     </form>
@@ -128,8 +125,8 @@ function Review({
                             averageRating={averageRating}
                             maxRating={maxRating}
                             totalReviews={totalReviews}
-                            reviewString={reviewString}
-                            reviewStringPlural={reviewStringPlural}
+                            reviewString={strings.review}
+                            reviewStringPlural={strings.reviewPlural}
                         />
                     )}
                     <span className="hlx-resetForm">
@@ -139,7 +136,7 @@ function Review({
                 </>
             )}
             {displayThankYou && (
-                <div className="hlx-submitResponse">{thankYouString}</div>
+                <div className="hlx-submitResponse">{strings.thankYou}</div>
             )}
         </div>
     );

@@ -1,19 +1,9 @@
-import React, { useEffect } from 'react';
-import useHover from '../../utils/useHover';
+import React from 'react';
 
-const RatingInput = ({
-    className,
-    index,
-    onClick,
-    onHover,
-    starString,
-    starStringPlural,
-}) => {
-    const [hoverRef, isHovered] = useHover();
-
-    useEffect(() => {
-        if (onHover) onHover(index, isHovered);
-    }, [isHovered]);
+const RatingInput = ({ index, isActive, onClick, starString, starStringPlural }) => {
+    const handleClick = (ev) => {
+        if (onClick) onClick(index, ev);
+    };
 
     const label = index === 1 ? `1 ${starString}` : `${index} ${starStringPlural}`;
     return (
@@ -21,11 +11,10 @@ const RatingInput = ({
             name="rating"
             aria-label={label}
             type="radio"
-            className={className}
-            ref={hoverRef}
-            onClick={onClick && ((e) => onClick(index, e))}
+            className={isActive ? 'is-Active' : ''}
+            onClick={handleClick}
+            value={index}
         />
     );
 };
-
 export default RatingInput;
