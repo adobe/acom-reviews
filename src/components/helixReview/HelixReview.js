@@ -47,6 +47,7 @@ const HelixReview = ({
                 }
             });
         } catch (e) {
+            /* eslint-disable-next-line no-console */
             console.log('The review response was not proper JSON.');
         }
     };
