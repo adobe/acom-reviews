@@ -11,15 +11,27 @@ const SHEET =
     'https://adobe.sharepoint.com/:x:/r/sites/dexter/_layouts/15/guestaccess.aspx?email=cpeyer%40adobe.com&e=4%3AkKlO86&at=9&wdLOR=cC7B42C77-6E8E-9A43-8886-3D4BE3D2D924&share=EQbXsR9mwiBGsrkxam9M5O0B0sGc3UeRSHbVqXi5d9lpTQ';
 const REVIEW_LOCATION = 'dc/dev/convert-pdf';
 
+const strings = {
+    ariaProductLabel: '',
+    sendCta: 'Send',
+    star: 'star',
+    starPlural: 'stars',
+    placeholder: 'Please give us your feedback',
+    review: 'vote',
+    reviewPlural: 'votes',
+    reviewTitle: 'Rate Your Experience',
+    thankYou: 'Thank you for your feedback!',
+};
+
 render(
     <HelixReview
-        ariaProductLabel="Convert PDF Review"
         commentThreshold={COMMENT_THRESHOLD}
         lang="en-US"
         postAuth={POST_AUTH}
         reviewLocation={REVIEW_LOCATION}
         reviewTitle="Rate your experience"
         sheet={SHEET}
+        strings={strings}
         testUrl={TEST_URL}
     />,
     document.getElementById('root')

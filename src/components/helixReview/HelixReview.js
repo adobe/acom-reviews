@@ -4,22 +4,14 @@ import sendHelixData from '../../utils/sendHelixData';
 import Review from '../review/Review';
 
 const HelixReview = ({
-    ariaProductLabel,
     commentThreshold = 3,
     lang,
     maxRating = 5,
-    placeholderText,
     postAuth,
     reviewLocation,
-    reviewString = 'vote',
-    reviewStringPlural = 'votes',
-    reviewTitle,
-    sendCtaText,
     sheet,
-    starString = 'star',
-    starStringPlural = 'stars',
+    strings,
     testUrl,
-    thankYouString = 'Thank you for your feedback!',
 }) => {
     const [rating, setRating] = useState();
     const [avgRating, setAvgRating] = useState(5);
@@ -79,23 +71,15 @@ const HelixReview = ({
 
     return (
         <Review
-            ariaProductLabel={ariaProductLabel}
             averageRating={avgRating}
             commentThreshold={commentThreshold}
             initialRating={rating}
             maxRating={maxRating}
             onRatingSet={onRatingSet}
-            placeholderText={placeholderText}
-            reviewString={reviewString}
-            reviewStringPlural={reviewStringPlural}
-            reviewTitle={reviewTitle}
-            sendCtaText={sendCtaText}
             setAverageRating={setAvgRating}
             setTotalReviews={setTotalReviews}
-            starString={starString}
-            starStringPlural={starStringPlural}
             staticRating={rating}
-            thankYouString={thankYouString}
+            strings={strings}
             totalReviews={totalReviews}
         />
     );
