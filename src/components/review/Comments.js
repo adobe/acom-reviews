@@ -1,11 +1,6 @@
 import React from 'react';
 
-function Comments({
-    comment,
-    handleCommentChange,
-    placeholderText = 'Please give us your feedback',
-    sendCta = 'Send',
-}) {
+function Comments({ comment, handleCommentChange, placeholderText, sendCta }) {
     return (
         <fieldset className="hlx-Review-commentFields is-Visible">
             <label htmlFor="rating-comments" />
