@@ -10,4 +10,5 @@ lerna-debug.log
 npm-debug.log*
 /.changelog
 .npm/
+.parcel-cache/
 yarn.lock
