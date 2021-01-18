@@ -12,3 +12,5 @@ npm-debug.log*
 .npm/
 .parcel-cache/
 yarn.lock
+logs/
+.hlx/

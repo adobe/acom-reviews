@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
+  "hlx": "dist/hlx.js",
+  "targets": {
+    "hlx": {
+      "engines": {
+        "browsers": "defaults"
+      }
+    }
+  },
   "dependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
@@ -34,8 +42,9 @@
   },
   "scripts": {
     "dev": "parcel ./src/index.html",
-    "build": "npm run prettier && npm run lint && jest && parcel build ./src/index.html",
-    "publish": "npm run prettier && npm run lint && jest && parcel build ./src/main.js",
+    "build": "npm run test && parcel build ./src/index.html",
+    "publish": "npm run test && parcel build ./src/main.js",
+    "hlx": "parcel build ./src/scripts.js && hlx up",
     "lint": "eslint src/ --fix",
     "prettier": "prettier --write src",
     "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}",
