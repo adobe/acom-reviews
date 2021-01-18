@@ -103,7 +103,9 @@ function Review({
         <div className="hlx-ReviewWrapper">
             {!displayThankYou && (
                 <>
-                    <h3 className="hlx-reviewTitle">{reviewTitle}</h3>
+                    <h3 className="hlx-reviewTitle" aria-label={reviewTitle}>
+                        {reviewTitle}
+                    </h3>
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
                             ariaProductLabel={ariaProductLabel}
@@ -132,10 +134,6 @@ function Review({
                             reviewStringPlural={reviewStringPlural}
                         />
                     )}
-                    <span className="hlx-resetForm">
-                        {/* eslint-disable-next-line */}
-                        <a href="#" />
-                    </span>
                 </>
             )}
             {displayThankYou && (
