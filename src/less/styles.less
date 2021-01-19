@@ -1,5 +1,9 @@
 @import 'variables';
 
+@sendEnabledColor: #505050;
+@sendDisabledColor: #bcbcbc;
+@sendHoverColor: #000000;
+
 * {
     font-family: sans-serif;
 }
@@ -8,8 +12,18 @@
     outline-color: #4e8af4;
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .hlx-ReviewWrapper {
     display: flex;
+    animation: fadeIn 0.5s;
     flex-direction: column;
     align-items: center;
 }
@@ -87,12 +101,19 @@ h3,
         border: none;
         appearance: none;
         font-weight: 700;
-        color: #676767;
+        color: @sendEnabledColor;
         font-size: 16px;
-        width: 94%;
         text-align: right;
         padding-right: 4px;
-        border-radius: 0 0 0 5px;
+        border-radius: 5px 0 0 5px;
+
+        &[disabled] {
+            color: @sendDisabledColor;
+        }
+
+        &:not([disabled]):hover {
+            color: @sendHoverColor;
+        }
     }
 
     textarea#rating-comments {
@@ -106,6 +127,8 @@ h3,
         font-size: 16px;
         font-style: italic;
         box-sizing: border-box;
+        resize: none;
+        overflow: auto;
 
         &.is-Visible {
             display: flex;

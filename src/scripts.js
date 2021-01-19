@@ -27,13 +27,14 @@ const strings = {
 render(
     <HelixReview
         commentThreshold={COMMENT_THRESHOLD}
+        hideTitleOnReload
         lang="en-US"
         postAuth={POST_AUTH}
         reviewPath={REVIEW_PATH}
         reviewTitle="Rate your experience"
         sheet={SHEET}
         strings={strings}
-        testUrl={TEST_URL}
+        postUrl={TEST_URL}
     />,
     document.getElementById('root')
 );
