@@ -1,6 +1,6 @@
 {
   "name": "acom-review-component",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "",
   "main": "dist/main.js",
   "hlx": "dist/hlx.js",
@@ -43,9 +43,10 @@
   "scripts": {
     "dev": "parcel ./src/index.html",
     "build": "npm run test && parcel build ./src/index.html",
-    "publish": "npm run test && parcel build ./src/main.js",
+    "hlx-build-only": "npm run test && parcel build ./src/scripts.js",
     "hlx": "parcel build ./src/scripts.js && hlx up",
     "lint": "eslint src/ --fix",
+    "prepublishOnly": "npm run test && parcel build ./src/main.js",
     "prettier": "prettier --write src",
     "prettier-watch": "onchange \"src/**/*\" -- prettier --write --ignore-unknown {{changed}}",
     "test": "npm run prettier && npm run lint && jest",

@@ -9,7 +9,7 @@ const TEST_URL =
     'https://adobeioruntime.net/api/v1/web/helix-clients/ccgrowth/forms-handler@v1';
 const SHEET =
     'https://adobe.sharepoint.com/:x:/r/sites/dexter/_layouts/15/guestaccess.aspx?email=cpeyer%40adobe.com&e=4%3AkKlO86&at=9&wdLOR=cC7B42C77-6E8E-9A43-8886-3D4BE3D2D924&share=EQbXsR9mwiBGsrkxam9M5O0B0sGc3UeRSHbVqXi5d9lpTQ';
-const REVIEW_LOCATION = 'dc/dev/convert-pdf';
+const REVIEW_PATH = 'dc/dev/convert-pdf';
 const COMMENT_THRESHOLD = 3;
 
 const strings = {
@@ -29,7 +29,7 @@ render(
         commentThreshold={COMMENT_THRESHOLD}
         lang="en-US"
         postAuth={POST_AUTH}
-        reviewLocation={REVIEW_LOCATION}
+        reviewPath={REVIEW_PATH}
         reviewTitle="Rate your experience"
         sheet={SHEET}
         strings={strings}

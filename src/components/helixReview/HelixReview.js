@@ -8,7 +8,8 @@ const HelixReview = ({
     lang,
     maxRating = 5,
     postAuth,
-    reviewLocation,
+    reviewDomain = 'http://localhost:3000',
+    reviewPath,
     sheet,
     strings,
     testUrl,
@@ -16,10 +17,11 @@ const HelixReview = ({
     const [rating, setRating] = useState();
     const [avgRating, setAvgRating] = useState(5);
     const [totalReviews, setTotalReviews] = useState(0);
+    const [displayRatingSummary, setDisplayRatingSummary] = useState(false);
 
     useEffect(() => {
         // init
-        const localData = getLocalStorage(reviewLocation);
+        const localData = getLocalStorage(reviewPath);
         let localDataTotalReviews = 0;
         if (localData) {
             setRating(localData.rating);
@@ -32,10 +34,7 @@ const HelixReview = ({
 
     const getHelixData = (localDataTotalReviews = 0) => {
         try {
-            // TODO - update fetch location
-            const resPromise = fetch(
-                `https://acom-reviews--adobe.hlx.page/${reviewLocation}.json`
-            );
+            const resPromise = fetch(`${reviewDomain}/${reviewPath}.json`);
             resPromise.then((res) => {
                 if (res.ok) {
                     res.json().then((reviewRes) => {
@@ -43,6 +42,7 @@ const HelixReview = ({
 
                         setAvgRating(average);
                         if (total > localDataTotalReviews) setTotalReviews(total);
+                        setDisplayRatingSummary(true);
                     });
                 }
             });
@@ -54,7 +54,7 @@ const HelixReview = ({
 
     const onRatingSet = (newRating, comment, updatedTotalReviews) => {
         // When onRatingSet is called, totalReviews hasn't updated yet as it's async
-        setLocalStorage(reviewLocation, {
+        setLocalStorage(reviewPath, {
             rating: newRating,
             totalReviews: updatedTotalReviews,
         });
@@ -78,6 +78,7 @@ const HelixReview = ({
             onRatingSet={onRatingSet}
             setAverageRating={setAvgRating}
             setTotalReviews={setTotalReviews}
+            displayRatingSummary={displayRatingSummary}
             staticRating={rating}
             strings={strings}
             totalReviews={totalReviews}
