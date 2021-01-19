@@ -48,7 +48,7 @@ h3,
 
     input[name='rating'] {
         padding: 0 0 0 5px;
-        background-image: url(../img/star-outline.svg);
+        background-image: data-uri('image/svg+xml;base64', '../img/star-outline.svg');
         background-size: 100%;
         background-repeat: no-repeat;
         appearance: none;
@@ -64,7 +64,7 @@ h3,
         }
 
         &.is-Active {
-            background-image: url(../img/star-filled.svg);
+            background-image: data-uri('image/svg+xml;base64', '../img/star-filled.svg');
         }
     }
 }
