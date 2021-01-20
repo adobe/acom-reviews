@@ -12,7 +12,7 @@ const HelixReview = ({
     reviewPath,
     sheet,
     strings,
-    testUrl,
+    postUrl,
 }) => {
     const [rating, setRating] = useState();
     const [avgRating, setAvgRating] = useState(5);
@@ -65,7 +65,7 @@ const HelixReview = ({
             postAuth,
             rating: newRating,
             sheet,
-            testUrl,
+            postUrl,
         });
     };
 

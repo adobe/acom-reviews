@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import HelixReview from './components/helixReview/HelixReview';
-import './less/styles.less';
+import './styles.less';
 
 const POST_AUTH =
     'SharedAccessSignature sr=https%3A%2F%2Fccgrowth.servicebus.windows.net%2Fformsink%2Fmessages&sig=RFndMU%2FyHZrlchNBfHlIdulld4URAgUAQdAlqVLf1Bw%3D&se=1634259041&skn=send';
@@ -33,7 +33,7 @@ render(
         reviewTitle="Rate your experience"
         sheet={SHEET}
         strings={strings}
-        testUrl={TEST_URL}
+        postUrl={TEST_URL}
     />,
     document.getElementById('root')
 );

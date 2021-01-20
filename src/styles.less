@@ -1,27 +1,33 @@
-@import 'variables';
-
-* {
-    font-family: sans-serif;
-}
-
-:focus {
-    outline-color: #4e8af4;
-}
+// Breakpoints
+// Reference: https://medium.freecodecamp.org/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862
+@size-responsive-phone-only: 37.4375rem; // 599px
+@size-responsive-tablet-portrait-up: (@size-responsive-phone-only + 0.0625rem); // 600px
+@size-responsive-tablet-portrait-max: 56.1875rem; // 899px
+@size-responsive-tablet-landscape-up: (
+    @size-responsive-tablet-portrait-max + 0.0625rem
+); // 900px
+@size-responsive-tablet-landscape-max: 74.9375rem; // 1199px
+@size-responsive-desktop: (@size-responsive-tablet-landscape-max + 0.0625rem); // 1200px
+@size-responsive-max: 90rem; // 1440px
 
 .hlx-ReviewWrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
 
-h3,
-.hlx-reviewTitle {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    margin-top: 0;
-    max-width: 80%;
-    text-align: center;
+    :focus {
+        outline-color: #4e8af4;
+    }
+
+    h3,
+    .hlx-reviewTitle {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        margin-top: 0;
+        max-width: 80%;
+        text-align: center;
+    }
 }
 
 .hlx-Review {
@@ -48,7 +54,7 @@ h3,
 
     input[name='rating'] {
         padding: 0 0 0 5px;
-        background-image: data-uri('image/svg+xml;base64', '../img/star-outline.svg');
+        background-image: data-uri('image/svg+xml;base64', './img/star-outline.svg');
         background-size: 100%;
         background-repeat: no-repeat;
         appearance: none;
@@ -64,7 +70,7 @@ h3,
         }
 
         &.is-Active {
-            background-image: data-uri('image/svg+xml;base64', '../img/star-filled.svg');
+            background-image: data-uri('image/svg+xml;base64', './img/star-filled.svg');
         }
     }
 }
