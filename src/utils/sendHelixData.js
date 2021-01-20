@@ -1,6 +1,14 @@
 const getDate = () => new Date().toISOString().replace(/[TZ]/g, ' ').split('.')[0].trim();
 
-const sendHelixData = ({ comment, lang, postAuth, rating, sheet, testUrl } = {}) => {
+const sendHelixData = ({
+    comment,
+    lang,
+    postAuth,
+    rating,
+    sheet,
+    postUrl,
+    visitorId,
+} = {}) => {
     const data = [
         { name: 'Timestamp', value: getDate() },
         { name: 'Rating', value: rating },
@@ -14,9 +22,13 @@ const sendHelixData = ({ comment, lang, postAuth, rating, sheet, testUrl } = {})
         data.push({ name: 'Locale', value: lang });
     }
 
+    if (visitorId) {
+        data.push({ name: 'VisitorId', value: visitorId });
+    }
+
     const body = { sheet, data };
 
-    fetch(testUrl, {
+    fetch(postUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
