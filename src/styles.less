@@ -8,6 +8,10 @@
 @size-responsive-desktop: 1200px;
 @size-responsive-max: 1440px;
 
+@sendEnabledColor: #505050;
+@sendDisabledColor: #bcbcbc;
+@sendHoverColor: #000000;
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -87,6 +91,14 @@
     display: none;
     position: relative;
     margin-left: 19px;
+    margin-top: 12px;
+    border-radius: 4px;
+    border: 2px solid #b3b3b3;
+    height: 96px;
+
+    &.has-focus {
+        border: 2px solid #4e8af4;
+    }
 
     &.is-Visible {
         display: initial;
@@ -96,7 +108,8 @@
     input[type='submit'] {
         position: absolute;
         right: 17px;
-        bottom: 6px;
+        bottom: 1px;
+        width: auto;
         background: #ffffff;
         border: none;
         appearance: none;
@@ -104,7 +117,7 @@
         color: @sendEnabledColor;
         font-size: 16px;
         text-align: right;
-        padding-right: 4px;
+        padding: 1px 10px;
         border-radius: 5px 0 0 5px;
 
         &[disabled] {
@@ -116,14 +129,22 @@
         }
     }
 
+    #ctaCover {
+        background-color: white;
+        bottom: 0;
+        cursor: text;
+        height: 22px;
+        position: absolute;
+        right: 17px;
+        width: 94%;
+    }
+
     textarea#rating-comments {
-        width: 326px;
-        min-width: 326px;
-        height: 96px;
-        border-radius: 4px;
-        border: 2px solid #b3b3b3;
-        padding: 6px 8px 22px 8px;
-        margin-top: 12px;
+        width: auto;
+        height: 74px;
+        border: none;
+        outline: none;
+        padding: 6px 8px 0 8px;
         font-size: 16px;
         font-style: italic;
         box-sizing: border-box;
@@ -188,8 +209,6 @@
     }
 
     .hlx-Review-commentFields {
-        textarea#rating-comments {
-            margin-top: 0;
-        }
+        margin-top: 0;
     }
 }
