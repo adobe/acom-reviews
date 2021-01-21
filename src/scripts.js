@@ -27,6 +27,7 @@ const strings = {
 render(
     <HelixReview
         commentThreshold={COMMENT_THRESHOLD}
+        hideTitleOnReload
         lang="en-US"
         postAuth={POST_AUTH}
         reviewPath={REVIEW_PATH}

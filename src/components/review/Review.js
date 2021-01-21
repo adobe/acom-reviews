@@ -22,6 +22,7 @@ function Review({
     averageRating,
     commentThreshold = 3,
     displayRatingSummary = true,
+    hideTitleOnReload,
     maxRating = 5,
     onRatingSet = noop,
     onRatingHover = noop,
@@ -32,17 +33,21 @@ function Review({
     totalReviews,
 }) {
     const [comment, setComment] = useState('');
+    const [beforeUnload, setBeforeUnload] = useState(null);
     const [displayComments, setDisplayComments] = useState(false);
     const [displayThankYou, setDisplayThankYou] = useState(false);
+    const [displayTitle, setDisplayTitle] = useState(true);
     const [totalHasBeenUpdated, setTotalHasBeenUpdated] = useState(false);
     const [isInteractive, setIsInteractive] = useState(true);
     const [rating, setRating] = useState(0);
     const [selectedRating, setSelectedRating] = useState(0);
+    const [timeoutId, setTimeoutId] = useState(null);
 
     useEffect(() => {
         if (staticRating) {
             setRating(staticRating);
             setIsInteractive(false);
+            if (hideTitleOnReload) setDisplayTitle(false);
         }
     }, [staticRating]);
 
@@ -50,8 +55,44 @@ function Review({
         setComment(commentText);
     };
 
+    const handleClickAboveCommentThreshold = (newRating, updatedTotalReviews) => {
+        setRating(newRating);
+
+        const sendSetRating = () => {
+            onRatingSet(newRating, comment, updatedTotalReviews);
+            setDisplayThankYou(true);
+        };
+
+        const wrappedSendSetRating = () => sendSetRating;
+        setBeforeUnload(wrappedSendSetRating);
+        window.addEventListener('beforeunload', sendSetRating);
+
+        // wait 5 seconds before submitting in case user changes their mind
+        setTimeoutId(
+            window.setTimeout(() => {
+                sendSetRating();
+                window.removeEventListener('beforeunload', beforeUnload);
+                setBeforeUnload(null);
+            }, 5000)
+        );
+    };
+
+    const clearCallbacks = () => {
+        if (timeoutId !== null) {
+            window.clearTimeout(timeoutId);
+            setTimeoutId(null);
+        }
+
+        if (beforeUnload !== null) {
+            window.removeEventListener('beforeunload', beforeUnload);
+            setBeforeUnload(null);
+        }
+    };
+
     const handleRatingClick = (newRating, e) => {
         if (!isInteractive) return;
+
+        clearCallbacks();
 
         let updatedTotalReviews = totalReviews;
 
@@ -75,8 +116,7 @@ function Review({
         }
 
         if (newRating > commentThreshold && !displayComments) {
-            onRatingSet(newRating, comment, updatedTotalReviews);
-            setDisplayThankYou(true);
+            handleClickAboveCommentThreshold(newRating, updatedTotalReviews);
             return;
         }
 
@@ -99,7 +139,9 @@ function Review({
         <div className="hlx-ReviewWrapper">
             {!displayThankYou && (
                 <>
-                    <h3 className="hlx-reviewTitle">{strings.reviewTitle}</h3>
+                    {displayTitle && (
+                        <h3 className="hlx-reviewTitle">{strings.reviewTitle}</h3>
+                    )}
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
                             ariaProductLabel={strings.ariaProductLabel}

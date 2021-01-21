@@ -28,7 +28,7 @@ render(
         reviewLocation={REVIEW_LOCATION}
         reviewTitle="Rate your experience"
         sheet={SHEET}
-        testUrl={TEST_URL}
+        postUrl={TEST_URL}
     />,
     document.getElementById('root')
 );

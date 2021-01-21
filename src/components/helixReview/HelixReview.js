@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorageUtils';
 import sendHelixData from '../../utils/sendHelixData';
+import setJsonLdProductInfo from '../../utils/setJsonLdProductInfo';
 import Review from '../review/Review';
 
 const HelixReview = ({
     commentThreshold = 3,
+    hideTitleOnReload,
     lang,
     maxRating = 5,
     postAuth,
+    productJson,
     reviewDomain = 'http://localhost:3000',
     reviewPath,
     sheet,
     strings,
     postUrl,
+    visitorId,
 }) => {
     const [rating, setRating] = useState();
     const [avgRating, setAvgRating] = useState(5);
@@ -43,6 +47,10 @@ const HelixReview = ({
                         setAvgRating(average);
                         if (total > localDataTotalReviews) setTotalReviews(total);
                         setDisplayRatingSummary(true);
+
+                        if (productJson) {
+                            setJsonLdProductInfo(productJson, average, total);
+                        }
                     });
                 }
             });
@@ -66,6 +74,7 @@ const HelixReview = ({
             rating: newRating,
             sheet,
             postUrl,
+            visitorId,
         });
     };
 
@@ -73,6 +82,7 @@ const HelixReview = ({
         <Review
             averageRating={avgRating}
             commentThreshold={commentThreshold}
+            hideTitleOnReload={hideTitleOnReload}
             initialRating={rating}
             maxRating={maxRating}
             onRatingSet={onRatingSet}
