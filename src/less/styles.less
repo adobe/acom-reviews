@@ -4,6 +4,11 @@
 @sendDisabledColor: #bcbcbc;
 @sendHoverColor: #000000;
 
+.appearanceNoneMixin {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 * {
     font-family: sans-serif;
 }
@@ -51,7 +56,7 @@ h3,
 
 .hlx-Review-ratingFields {
     label {
-        appearance: none;
+        .appearanceNoneMixin();
         visibility: collapse;
         width: 0;
     }
@@ -61,7 +66,7 @@ h3,
         background-image: data-uri('image/svg+xml;base64', '../img/star-outline.svg');
         background-size: 100%;
         background-repeat: no-repeat;
-        appearance: none;
+        .appearanceNoneMixin();
         width: 22px;
         height: 22px;
 
@@ -71,6 +76,10 @@ h3,
 
         &:focus {
             outline: none;
+        }
+
+        &.has-keyboard-focus {
+            outline: 2px solid #4e8af4;
         }
 
         &.is-Active {
@@ -104,7 +113,7 @@ h3,
         width: auto;
         background: #ffffff;
         border: none;
-        appearance: none;
+        .appearanceNoneMixin();
         font-weight: 700;
         color: @sendEnabledColor;
         font-size: 16px;
