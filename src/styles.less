@@ -12,6 +12,11 @@
 @sendDisabledColor: #bcbcbc;
 @sendHoverColor: #000000;
 
+.appearanceNoneMixin {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -59,7 +64,7 @@
 
 .hlx-Review-ratingFields {
     label {
-        appearance: none;
+        .appearanceNoneMixin();
         visibility: collapse;
         width: 0;
     }
@@ -69,7 +74,7 @@
         background-image: data-uri('image/svg+xml;base64', './img/star-outline.svg');
         background-size: 100%;
         background-repeat: no-repeat;
-        appearance: none;
+        .appearanceNoneMixin();
         width: 22px;
         height: 22px;
 
@@ -79,6 +84,10 @@
 
         &:focus {
             outline: none;
+        }
+
+        &.has-keyboard-focus {
+            outline: 2px solid #4e8af4;
         }
 
         &.is-Active {
@@ -112,13 +121,12 @@
         width: auto;
         background: #ffffff;
         border: none;
-        appearance: none;
+        .appearanceNoneMixin();
         font-weight: 700;
         color: @sendEnabledColor;
         font-size: 16px;
         text-align: right;
         padding: 1px 10px;
-        border-radius: 5px 0 0 5px;
 
         &[disabled] {
             color: @sendDisabledColor;
