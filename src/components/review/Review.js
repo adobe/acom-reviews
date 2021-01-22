@@ -23,6 +23,7 @@ function Review({
     commentThreshold = 3,
     displayRatingSummary = true,
     hideTitleOnReload,
+    initialRating,
     maxRating = 5,
     onRatingSet = noop,
     onRatingHover = noop,
@@ -50,6 +51,12 @@ function Review({
             if (hideTitleOnReload) setDisplayTitle(false);
         }
     }, [staticRating]);
+
+    useEffect(() => {
+        if (initialRating) {
+            setRating(initialRating);
+        }
+    }, [initialRating]);
 
     const handleCommentChange = (commentText) => {
         setComment(commentText);
@@ -143,6 +150,7 @@ function Review({
                             ariaProductLabel={strings.ariaProductLabel}
                             count={5}
                             isInteractive={isInteractive}
+                            label={strings.reviewTitle}
                             onClick={handleRatingClick}
                             onRatingHover={onRatingHover}
                             rating={rating}
