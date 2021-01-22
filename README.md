@@ -1,5 +1,5 @@
 # Adobe.com React Review Component
-A collection of components used to populate product review information on adobe.com
+A collection of components used to populate product review information on adobe.com.
 
 ## Main Pieces
 There are two main parts to this project:
