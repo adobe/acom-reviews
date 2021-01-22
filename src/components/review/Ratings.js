@@ -1,70 +1,99 @@
 import React, { useEffect, useState } from 'react';
 import RatingInput from './RatingInput';
 import useHover from '../../utils/useHover';
+import { isKeyboardNavigation } from '../../utils/utils';
 
-const Ratings = React.memo(
-    ({
-        ariaProductLabel,
-        count,
-        isInteractive,
-        onClick,
-        onRatingHover,
-        selectedRating,
-        starString,
-        starStringPlural,
-    }) => {
-        const [rating, setRating] = useState(selectedRating);
-        const [fieldSetRef, fsMouseOut] = useHover();
-        const [, fsMouseLeave] = useHover({
-            refToAttachTo: fieldSetRef,
-            useMouseLeave: true,
-        });
+const Ratings = ({
+    ariaProductLabel,
+    count,
+    isInteractive,
+    onClick,
+    onRatingHover,
+    rating,
+    starString,
+    starStringPlural,
+}) => {
+    const [currentRating, setCurrentRating] = useState(rating);
+    const [keyboardFocusIndex, setKeyboardFocusIndex] = useState(0);
+    const [fieldSetRef, fieldSetMouseOut] = useHover();
+    const [, fieldSetMouseLeave] = useHover({
+        refToAttachTo: fieldSetRef,
+        useMouseLeave: true,
+    });
 
-        useEffect(() => {
-            if (!isInteractive) return;
+    useEffect(() => {
+        if (!isInteractive) return;
 
-            if (fsMouseOut.hovering) {
-                // only the inputs have value
-                if (fsMouseOut.event.target.value) {
-                    const hoveredRating = parseInt(fsMouseOut.event.target.value, 10);
-                    setRating(hoveredRating);
-                    if (onRatingHover) onRatingHover(hoveredRating);
-                }
+        if (fieldSetMouseOut.hovering) {
+            // only the inputs have value
+            if (fieldSetMouseOut.event.target.value) {
+                const hoveredRating = parseInt(fieldSetMouseOut.event.target.value, 10);
+                setCurrentRating(hoveredRating);
+                if (onRatingHover) onRatingHover(hoveredRating);
             }
-
-            if (!fsMouseLeave.hovering && selectedRating !== rating) {
-                setRating(selectedRating);
-            }
-        }, [fsMouseOut.hovering, fsMouseLeave.hovering]);
-
-        useEffect(() => {
-            if (!isInteractive) setRating(selectedRating);
-        }, [selectedRating]);
-
-        const ratings = [];
-        for (let i = 1; i < count + 1; i += 1) {
-            ratings.push(
-                <RatingInput
-                    key={`rating-${i}`}
-                    isActive={i <= rating}
-                    index={i}
-                    onClick={onClick}
-                    starString={starString}
-                    starStringPlural={starStringPlural}
-                />
-            );
         }
 
-        return (
-            <fieldset
-                ref={fieldSetRef}
-                aria-label={ariaProductLabel}
-                className="hlx-Review-ratingFields"
-            >
-                {ratings}
-            </fieldset>
+        if (!fieldSetMouseLeave.hovering && rating !== currentRating) {
+            setCurrentRating(rating);
+        }
+    }, [fieldSetMouseOut.hovering, fieldSetMouseLeave.hovering]);
+
+    useEffect(() => {
+        setCurrentRating(rating);
+    }, [rating]);
+
+    const handleClick = (index, ev) => {
+        if (isKeyboardNavigation(ev)) {
+            setCurrentRating(index);
+            return;
+        }
+        setKeyboardFocusIndex(null);
+        onClick(index, ev, { isKeyboardSelection: ev.type === 'keypress' });
+    };
+
+    const onFocus = (ev) => {
+        setCurrentRating(ev.target.value);
+        ev.persist();
+        // delay setting the focus index so if it's a mouse click focus will not be shown
+        setTimeout(() => {
+            setKeyboardFocusIndex(parseInt(ev.target.value, 10));
+        }, 1);
+    };
+
+    const onBlur = (ev) => {
+        if (ev.relatedTarget === null || ev.relatedTarget.nodeName !== 'INPUT') {
+            // Focus has left the rating fields
+            setCurrentRating(rating);
+            setKeyboardFocusIndex(null);
+        }
+    };
+
+    const ratings = [];
+    for (let i = 1; i < count + 1; i += 1) {
+        ratings.push(
+            <RatingInput
+                key={`rating-${i}`}
+                isActive={i <= currentRating}
+                index={i}
+                onClick={handleClick}
+                hasKeyboardFocus={keyboardFocusIndex === i}
+                starString={starString}
+                starStringPlural={starStringPlural}
+            />
         );
     }
-);
+
+    return (
+        <fieldset
+            ref={fieldSetRef}
+            aria-label={ariaProductLabel}
+            className="hlx-Review-ratingFields"
+            onFocus={onFocus}
+            onBlur={onBlur}
+        >
+            {ratings}
+        </fieldset>
+    );
+};
 
 export default Ratings;

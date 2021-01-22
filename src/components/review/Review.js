@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addToAverage, isRadioMouseClick } from '../../utils/utils';
+import { addToAverage } from '../../utils/utils';
 import Comments from './Comments';
 import Ratings from './Ratings';
 import RatingSummary from './RatingSummary';
@@ -89,7 +89,7 @@ function Review({
         }
     };
 
-    const handleRatingClick = (newRating, e) => {
+    const handleRatingClick = (newRating, ev, { isKeyboardSelection = false } = {}) => {
         if (!isInteractive) return;
 
         clearCallbacks();
@@ -104,18 +104,7 @@ function Review({
 
         setAverageRating(addToAverage(newRating, averageRating, updatedTotalReviews));
 
-        if (!isRadioMouseClick(e)) {
-            if (newRating > commentThreshold) {
-                // User entered ratings via keyboard, do not immediately send rating
-                setSelectedRating(newRating);
-                setRating(newRating);
-            } else {
-                setDisplayComments(true);
-            }
-            return;
-        }
-
-        if (newRating > commentThreshold && !displayComments) {
+        if (!isKeyboardSelection && newRating > commentThreshold && !displayComments) {
             handleClickAboveCommentThreshold(newRating, updatedTotalReviews);
             return;
         }
@@ -127,6 +116,11 @@ function Review({
 
         setSelectedRating(newRating);
         setRating(newRating);
+
+        if (isKeyboardSelection && newRating > commentThreshold && !displayComments) {
+            onRatingSet(newRating, comment, updatedTotalReviews);
+            setDisplayThankYou(true);
+        }
     };
 
     const handleSubmit = (e) => {
@@ -140,7 +134,9 @@ function Review({
             {!displayThankYou && (
                 <>
                     {displayTitle && (
-                        <h3 className="hlx-reviewTitle">{strings.reviewTitle}</h3>
+                        <h3 className="hlx-reviewTitle" aria-label={strings.reviewTitle}>
+                            {strings.reviewTitle}
+                        </h3>
                     )}
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
@@ -149,7 +145,7 @@ function Review({
                             isInteractive={isInteractive}
                             onClick={handleRatingClick}
                             onRatingHover={onRatingHover}
-                            selectedRating={rating}
+                            rating={rating}
                             starString={strings.star}
                             starStringPlural={strings.starPlural}
                         />

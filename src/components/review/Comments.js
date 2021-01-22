@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-function Comments({ comment, handleCommentChange, placeholderText, sendCta }) {
+function Comments({ comment, handleCommentChange, placeholderText, sendCtaText }) {
     const [hasComment, setHasComment] = useState(false);
     const [displaySend, setDisplaySend] = useState(false);
     const [hasFocus, setHasFocus] = useState(false);
@@ -49,9 +49,7 @@ function Comments({ comment, handleCommentChange, placeholderText, sendCta }) {
                 &nbsp;
             </div>
             {displaySend && (
-                <>
-                    <input disabled={!hasComment} type="submit" value={sendCta} />
-                </>
+                <input disabled={!hasComment} type="submit" value={sendCtaText} />
             )}
         </fieldset>
     );

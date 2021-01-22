@@ -3,6 +3,12 @@ const addToAverage = (val, currentAvg, totalCount) =>
     (val - currentAvg) / totalCount + currentAvg;
 
 // Differentiate between a mouse click on a radio button vs a keyboard navigation
-const isRadioMouseClick = (ev) => ev.clientX !== 0 || ev.clientY !== 0;
+const isKeyboardNavigation = (ev) => {
+    return (
+        (ev.clientX === 0 && ev.clientY === 0) ||
+        // Safari populatex clientX/Y even with keyboard nav, so using the non-standard webkitForce to differentiate
+        (ev.nativeEvent.webkitForce !== undefined && ev.nativeEvent.webkitForce === 0)
+    );
+};
 
-export { addToAverage, isRadioMouseClick };
+export { addToAverage, isKeyboardNavigation };
