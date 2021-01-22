@@ -7,6 +7,7 @@ const Ratings = ({
     ariaProductLabel,
     count,
     isInteractive,
+    label,
     onClick,
     onRatingHover,
     rating,
@@ -15,6 +16,7 @@ const Ratings = ({
 }) => {
     const [currentRating, setCurrentRating] = useState(rating);
     const [keyboardFocusIndex, setKeyboardFocusIndex] = useState(0);
+    const [mouseDown, setMouseDown] = useState(false);
     const [fieldSetRef, fieldSetMouseOut] = useHover();
     const [, fieldSetMouseLeave] = useHover({
         refToAttachTo: fieldSetRef,
@@ -45,6 +47,7 @@ const Ratings = ({
     const handleClick = (index, ev) => {
         if (isKeyboardNavigation(ev)) {
             setCurrentRating(index);
+            ev.target.checked = index === rating;
             return;
         }
         setKeyboardFocusIndex(null);
@@ -52,12 +55,14 @@ const Ratings = ({
     };
 
     const onFocus = (ev) => {
+        // Chrome fires onFocus event right after mouseDown.  In that case do not set focus ring.
+        if (mouseDown) {
+            setMouseDown(false);
+            return;
+        }
+
         setCurrentRating(ev.target.value);
-        ev.persist();
-        // delay setting the focus index so if it's a mouse click focus will not be shown
-        setTimeout(() => {
-            setKeyboardFocusIndex(parseInt(ev.target.value, 10));
-        }, 1);
+        setKeyboardFocusIndex(parseInt(ev.target.value, 10));
     };
 
     const onBlur = (ev) => {
@@ -66,6 +71,10 @@ const Ratings = ({
             setCurrentRating(rating);
             setKeyboardFocusIndex(null);
         }
+    };
+
+    const onMouseDown = () => {
+        setMouseDown(true);
     };
 
     const ratings = [];
@@ -84,11 +93,14 @@ const Ratings = ({
     }
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <fieldset
             ref={fieldSetRef}
             aria-label={ariaProductLabel}
             className="hlx-Review-ratingFields"
+            label={label}
             onFocus={onFocus}
+            onMouseDown={onMouseDown}
             onBlur={onBlur}
         >
             {ratings}
