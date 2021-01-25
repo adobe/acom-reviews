@@ -1,11 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-function Comments({ comment, handleCommentChange, placeholderText, sendCtaText }) {
+function Comments({ label, comment, handleCommentChange, placeholderText, sendCtaText }) {
     const [hasComment, setHasComment] = useState(false);
     const [displaySend, setDisplaySend] = useState(false);
     const [hasFocus, setHasFocus] = useState(false);
 
     const textArea = useRef(null);
+
+    useEffect(() => {
+        if (textArea && textArea.current) textArea.current.focus();
+    }, [textArea]);
 
     const commentChange = (e) => {
         const { value } = e.target;
@@ -23,6 +27,7 @@ function Comments({ comment, handleCommentChange, placeholderText, sendCtaText }
         setHasFocus(true);
     };
 
+    // Focus the comment area when whitespace to the left of send is clicked
     const onCtaCoverClick = () => textArea.current && textArea.current.focus();
 
     return (
@@ -38,6 +43,7 @@ function Comments({ comment, handleCommentChange, placeholderText, sendCtaText }
                 cols="40"
                 maxLength="4000"
                 name="rating-comments"
+                aria-label={label}
                 placeholder={placeholderText}
                 onBlur={onBlur}
                 onChange={commentChange}

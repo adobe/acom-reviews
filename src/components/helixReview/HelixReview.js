@@ -9,15 +9,15 @@ const HelixReview = ({
     hideTitleOnReload,
     lang,
     maxRating = 5,
-    onRatingSet: onRatingSetCallback,
     onRatingHover,
+    onRatingSet: onRatingSetCallback,
     postAuth,
+    postUrl,
     productJson,
     reviewDomain,
     reviewPath,
     sheet,
     strings,
-    postUrl,
     visitorId,
 }) => {
     const [rating, setRating] = useState();

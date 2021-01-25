@@ -10,6 +10,7 @@ const RatingInput = ({
     onClick,
     starString,
     starStringPlural,
+    tooltip,
 }) => {
     const handleClick = (ev, isKeyboardSelection = false) => {
         if (onClick) onClick(index, ev, { isKeyboardSelection });
@@ -17,6 +18,7 @@ const RatingInput = ({
 
     const handleKeyPress = (ev) => {
         if (ev.which === KEY_ENTER || ev.which === KEY_SPACE) {
+            ev.preventDefault();
             handleClick(ev, { isKeyboardSelection: true });
         }
     };
@@ -24,11 +26,12 @@ const RatingInput = ({
     const label = index === 1 ? `1 ${starString}` : `${index} ${starStringPlural}`;
     return (
         <input
+            data-tooltip={tooltip}
             name="rating"
             aria-label={label}
             type="radio"
-            className={`${isActive ? 'is-Active ' : ''}${
-                hasKeyboardFocus ? 'has-keyboard-focus' : ''
+            className={`${tooltip ? 'tooltip ' : ''}${isActive ? ' is-Active' : ''}${
+                hasKeyboardFocus ? ' has-keyboard-focus' : ''
             }`}
             onClick={handleClick}
             onKeyPress={handleKeyPress}
