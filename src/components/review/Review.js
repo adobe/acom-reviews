@@ -7,14 +7,16 @@ import RatingSummary from './RatingSummary';
 const noop = () => {};
 
 const defaultStrings = {
-    ariaProductLabel: '',
-    sendCta: 'Send',
-    star: 'star',
-    starPlural: 'stars',
+    commentLabel: 'Review Feedback',
     placeholder: 'Please give us your feedback',
     review: 'vote',
     reviewPlural: 'votes',
     reviewTitle: 'Rate Your Experience',
+    sendCta: 'Send',
+    star: 'star',
+    starPlural: 'stars',
+    starsLegend: 'Choose a star rating',
+    tooltips: ['This sucks', 'Meh', "It's OK", 'I like it', 'Best thing ever'],
     thankYou: 'Thank you for your feedback!',
 };
 
@@ -117,9 +119,7 @@ function Review({
         }
 
         // No star has been selected yet
-        if (selectedRating === 0) {
-            setDisplayComments(newRating <= commentThreshold);
-        }
+        if (selectedRating === 0) setDisplayComments(newRating <= commentThreshold);
 
         setSelectedRating(newRating);
         setRating(newRating);
@@ -141,24 +141,23 @@ function Review({
             {!displayThankYou && (
                 <>
                     {displayTitle && (
-                        <h3 className="hlx-reviewTitle" aria-label={strings.reviewTitle}>
-                            {strings.reviewTitle}
-                        </h3>
+                        <h3 className="hlx-reviewTitle">{strings.reviewTitle}</h3>
                     )}
                     <form className="hlx-Review" onSubmit={handleSubmit}>
                         <Ratings
-                            ariaProductLabel={strings.ariaProductLabel}
                             count={5}
                             isInteractive={isInteractive}
-                            label={strings.reviewTitle}
                             onClick={handleRatingClick}
                             onRatingHover={onRatingHover}
                             rating={rating}
+                            starsLegend={strings.starsLegend || strings.reviewTitle}
                             starString={strings.star}
                             starStringPlural={strings.starPlural}
+                            tooltips={strings.tooltips}
                         />
                         {displayComments && (
                             <Comments
+                                label={strings.commentLabel}
                                 feedback={comment}
                                 handleCommentChange={handleCommentChange}
                                 placeholderText={strings.placeholder}
