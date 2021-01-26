@@ -21,7 +21,7 @@ import { HelixReview } from 'acom-review-component';
 
 render(
     <HelixReview
-        ariaProductLabel="Convert PDF Review"
+        productLabel="Convert PDF Review"
         commentThreshold={COMMENT_THRESHOLD}
         lang="en-US"
         postAuth={POST_AUTH}

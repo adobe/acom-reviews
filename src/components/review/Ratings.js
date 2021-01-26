@@ -4,15 +4,15 @@ import useHover from '../../utils/useHover';
 import { isKeyboardNavigation } from '../../utils/utils';
 
 const Ratings = ({
-    ariaProductLabel,
     count,
     isInteractive,
-    label,
     onClick,
     onRatingHover,
     rating,
+    starsLegend,
     starString,
     starStringPlural,
+    tooltips,
 }) => {
     const [currentRating, setCurrentRating] = useState(rating);
     const [keyboardFocusIndex, setKeyboardFocusIndex] = useState(0);
@@ -79,6 +79,7 @@ const Ratings = ({
 
     const ratings = [];
     for (let i = 1; i < count + 1; i += 1) {
+        const tooltip = tooltips && tooltips[i - 1];
         ratings.push(
             <RatingInput
                 key={`rating-${i}`}
@@ -88,6 +89,7 @@ const Ratings = ({
                 hasKeyboardFocus={keyboardFocusIndex === i}
                 starString={starString}
                 starStringPlural={starStringPlural}
+                tooltip={tooltip}
             />
         );
     }
@@ -96,13 +98,12 @@ const Ratings = ({
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <fieldset
             ref={fieldSetRef}
-            aria-label={ariaProductLabel}
             className="hlx-Review-ratingFields"
-            label={label}
             onFocus={onFocus}
             onMouseDown={onMouseDown}
             onBlur={onBlur}
         >
+            {starsLegend && <legend>{starsLegend}</legend>}
             {ratings}
         </fieldset>
     );

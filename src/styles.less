@@ -10,11 +10,18 @@
 
 @sendEnabledColor: #505050;
 @sendDisabledColor: #bcbcbc;
-@sendHoverColor: #000000;
+@sendHoverColor: hsl(0, 0%, 0%);
+@tooltipBackground: black;
+@tooltipText: white;
 
 .appearanceNoneMixin {
     -webkit-appearance: none;
     appearance: none;
+}
+
+.visuallyHiddenButAccessible {
+    position: absolute;
+    clip: rect(0 0 0 0);
 }
 
 @keyframes fadeIn {
@@ -93,6 +100,10 @@
         &.is-Active {
             background-image: data-uri('image/svg+xml;base64', './img/star-filled.svg');
         }
+    }
+
+    & > legend {
+        .visuallyHiddenButAccessible();
     }
 }
 
@@ -218,5 +229,55 @@
 
     .hlx-Review-commentFields {
         margin-top: 0;
+    }
+}
+
+.tooltip {
+    position: relative;
+
+    &:before {
+        content: attr(data-tooltip);
+        position: absolute;
+        right: 50%;
+        transform: translateX(50%);
+        top: 130%;
+        margin-top: 15px;
+        width: max-content;
+        max-width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+        background: @tooltipBackground;
+        color: @tooltipText;
+        text-align: center;
+
+        opacity: 0;
+        transition: 0.3s opacity;
+        visibility: hidden;
+    }
+
+    &:after {
+        content: '';
+        top: 100%;
+        position: absolute;
+        margin-left: -5px;
+        margin-top: 2px;
+        opacity: 0;
+        transition: 1s;
+
+        // the arrow
+        border: 10px solid @tooltipBackground;
+        border-color: transparent transparent @tooltipBackground transparent;
+
+        opacity: 0;
+        transition: 0.3s opacity;
+        visibility: hidden;
+    }
+
+    &:hover:before,
+    &:hover:after,
+    &.has-keyboard-focus:before,
+    &.has-keyboard-focus:after {
+        opacity: 1;
+        visibility: visible;
     }
 }

@@ -15,14 +15,16 @@ const REVIEW_DOMAIN = 'http://localhost:3000';
 const COMMENT_THRESHOLD = 3;
 
 const strings = {
-    ariaProductLabel: '',
+    commentLabel: 'Review Feedback',
     sendCta: 'Send',
     star: 'star',
     starPlural: 'stars',
+    tooltips: ['This sucks', 'Meh', "It's OK", 'I like it', 'Best thing ever'],
     placeholder: 'Please give us your feedback',
     review: 'vote',
     reviewPlural: 'votes',
     reviewTitle: 'Rate Your Experience',
+    starsLegend: 'Convert PDF Review - Choose a star rating',
     thankYou: 'Thank you for your feedback!',
 };
 
