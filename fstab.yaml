@@ -1,2 +1,2 @@
 mountpoints:
-  /: https://adobe.sharepoint.com/:f:/r/sites/dexter/Shared%20Documents/Reviews
+  /reviews-api: https://adobe.sharepoint.com/:f:/r/sites/dexter/Shared%20Documents/Reviews
