@@ -8,11 +8,21 @@
 @size-responsive-desktop: 1200px;
 @size-responsive-max: 1440px;
 
+@ratingBgImage: data-uri('image/svg+xml;base64', './img/star-outline.svg');
+@ratingActiveBgImage: data-uri('image/svg+xml;base64', './img/star-filled.svg');
+
+@focusOutlineColor: #4e8af4;
+@focusOutline: 2px solid @focusOutlineColor;
+
+@commentBgColor: white;
 @sendEnabledColor: #505050;
 @sendDisabledColor: #bcbcbc;
 @sendHoverColor: hsl(0, 0%, 0%);
-@tooltipBackground: black;
+
+@tooltipBackground: #747474;
 @tooltipText: white;
+@tooltipTransitionTime: 0.3s;
+@tooltipZIndex: 50;
 
 .appearanceNoneMixin {
     -webkit-appearance: none;
@@ -40,7 +50,7 @@
     align-items: center;
 
     :focus {
-        outline-color: #4e8af4;
+        outline-color: @focusOutlineColor;
     }
 
     h3,
@@ -78,7 +88,7 @@
 
     input[name='rating'] {
         padding: 0 0 0 5px;
-        background-image: data-uri('image/svg+xml;base64', './img/star-outline.svg');
+        background-image: @ratingBgImage;
         background-size: 100%;
         background-repeat: no-repeat;
         .appearanceNoneMixin();
@@ -94,11 +104,11 @@
         }
 
         &.has-keyboard-focus {
-            outline: 2px solid #4e8af4;
+            outline: @focusOutline;
         }
 
         &.is-Active {
-            background-image: data-uri('image/svg+xml;base64', './img/star-filled.svg');
+            background-image: @ratingActiveBgImage;
         }
     }
 
@@ -110,19 +120,17 @@
 .hlx-Review-commentFields {
     display: none;
     position: relative;
-    margin-left: 19px;
     margin-top: 12px;
     border-radius: 4px;
     border: 2px solid #b3b3b3;
     height: 80px;
 
     &.has-focus {
-        border: 2px solid #4e8af4;
+        border: @focusOutline;
     }
 
     &.is-Visible {
-        display: initial;
-        margin-left: 19px;
+        display: block;
     }
 
     input[type='submit'] {
@@ -130,7 +138,7 @@
         right: 17px;
         bottom: 1px;
         width: auto;
-        background: #ffffff;
+        background: @commentBgColor;
         border: none;
         .appearanceNoneMixin();
         font-weight: 700;
@@ -149,7 +157,7 @@
     }
 
     #ctaCover {
-        background-color: white;
+        background-color: @commentBgColor;
         bottom: 0;
         cursor: text;
         height: 22px;
@@ -208,27 +216,28 @@
 @media screen and (min-width: @size-responsive-desktop) {
     .hlx-ReviewWrapper {
         flex-direction: row;
-    }
 
-    .hlx-reviewTitle {
-        margin-bottom: 0;
-        margin-top: 0;
-        max-width: 185px;
-        text-align: left;
-    }
+        .hlx-reviewTitle {
+            margin-bottom: 0;
+            margin-top: 0;
+            max-width: 500px;
+            text-align: left;
+        }
 
-    .hlx-Review {
-        flex-direction: row;
-        margin-left: 20px;
-        margin-right: 20px;
-    }
+        .hlx-Review {
+            flex-direction: row;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
 
-    .hlx-ReviewStats {
-        margin-top: initial;
-    }
+        .hlx-ReviewStats {
+            margin-top: initial;
+        }
 
-    .hlx-Review-commentFields {
-        margin-top: 0;
+        .hlx-Review-commentFields {
+            margin-top: 0;
+            margin-left: 19px;
+        }
     }
 }
 
@@ -245,13 +254,15 @@
         width: max-content;
         max-width: 200px;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 4px;
         background: @tooltipBackground;
         color: @tooltipText;
         text-align: center;
+        font-size: 12px;
+        font-weight: 400;
 
         opacity: 0;
-        transition: 0.3s opacity;
+        transition: @tooltipTransitionTime opacity;
         visibility: hidden;
     }
 
@@ -259,25 +270,23 @@
         content: '';
         top: 100%;
         position: absolute;
-        margin-left: -5px;
-        margin-top: 2px;
-        opacity: 0;
-        transition: 1s;
+        margin-top: 12px;
 
         // the arrow
-        border: 10px solid @tooltipBackground;
+        border: 5px solid @tooltipBackground;
         border-color: transparent transparent @tooltipBackground transparent;
 
         opacity: 0;
-        transition: 0.3s opacity;
+        transition: @tooltipTransitionTime opacity;
         visibility: hidden;
     }
 
-    &:hover:before,
-    &:hover:after,
+    &.is-hovering:before,
+    &.is-hovering:after,
     &.has-keyboard-focus:before,
     &.has-keyboard-focus:after {
         opacity: 1;
         visibility: visible;
+        z-index: @tooltipZIndex;
     }
 }

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { addToAverage } from '../../utils/utils';
 import Comments from './Comments';
 import Ratings from './Ratings';
 import RatingSummary from './RatingSummary';
+
+const BEFORE_UNLOAD_EVENT = 'beforeunload';
 
 const noop = () => {};
 
@@ -22,9 +24,11 @@ const defaultStrings = {
 
 function Review({
     averageRating,
+    clickTimeout = 5000,
     commentThreshold = 3,
     displayRatingSummary = true,
     hideTitleOnReload,
+    tooltipDelay = 300,
     initialRating,
     maxRating = 5,
     onRatingSet = noop,
@@ -36,7 +40,6 @@ function Review({
     totalReviews,
 }) {
     const [comment, setComment] = useState('');
-    const [beforeUnload, setBeforeUnload] = useState(null);
     const [displayComments, setDisplayComments] = useState(false);
     const [displayThankYou, setDisplayThankYou] = useState(false);
     const [displayTitle, setDisplayTitle] = useState(true);
@@ -45,6 +48,8 @@ function Review({
     const [rating, setRating] = useState(0);
     const [selectedRating, setSelectedRating] = useState(0);
     const [timeoutId, setTimeoutId] = useState(null);
+
+    const beforeUnloadCallback = useRef(null);
 
     useEffect(() => {
         if (staticRating) {
@@ -68,21 +73,27 @@ function Review({
         setRating(newRating);
 
         const sendSetRating = () => {
-            onRatingSet(newRating, comment, updatedTotalReviews);
+            onRatingSet({
+                rating: newRating,
+                comment,
+                totalReviews: updatedTotalReviews,
+            });
             setDisplayThankYou(true);
         };
 
-        const wrappedSendSetRating = () => sendSetRating;
-        setBeforeUnload(wrappedSendSetRating);
-        window.addEventListener('beforeunload', sendSetRating);
+        beforeUnloadCallback.current = sendSetRating;
+        window.addEventListener(BEFORE_UNLOAD_EVENT, sendSetRating);
 
         // wait 5 seconds before submitting in case user changes their mind
         setTimeoutId(
             window.setTimeout(() => {
+                window.removeEventListener(
+                    BEFORE_UNLOAD_EVENT,
+                    beforeUnloadCallback.current
+                );
+                beforeUnloadCallback.current = null;
                 sendSetRating();
-                window.removeEventListener('beforeunload', beforeUnload);
-                setBeforeUnload(null);
-            }, 5000)
+            }, parseInt(clickTimeout, 10))
         );
     };
 
@@ -92,9 +103,9 @@ function Review({
             setTimeoutId(null);
         }
 
-        if (beforeUnload !== null) {
-            window.removeEventListener('beforeunload', beforeUnload);
-            setBeforeUnload(null);
+        if (beforeUnloadCallback.current !== null) {
+            window.removeEventListener(BEFORE_UNLOAD_EVENT, beforeUnloadCallback.current);
+            beforeUnloadCallback.current = null;
         }
     };
 
@@ -125,14 +136,18 @@ function Review({
         setRating(newRating);
 
         if (isKeyboardSelection && newRating > commentThreshold && !displayComments) {
-            onRatingSet(newRating, comment, updatedTotalReviews);
+            onRatingSet({
+                rating: newRating,
+                comment,
+                totalReviews: updatedTotalReviews,
+            });
             setDisplayThankYou(true);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onRatingSet(rating, comment, totalReviews);
+        onRatingSet({ rating, comment, totalReviews });
         setDisplayThankYou(true);
     };
 
@@ -154,6 +169,7 @@ function Review({
                             starString={strings.star}
                             starStringPlural={strings.starPlural}
                             tooltips={strings.tooltips}
+                            tooltipDelay={tooltipDelay}
                         />
                         {displayComments && (
                             <Comments

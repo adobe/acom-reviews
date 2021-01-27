@@ -30,6 +30,7 @@ const strings = {
 
 render(
     <HelixReview
+        clickTimeout="5000"
         commentThreshold={COMMENT_THRESHOLD}
         hideTitleOnReload
         lang="en-US"
@@ -39,7 +40,17 @@ render(
         reviewTitle="Rate your experience"
         sheet={SHEET}
         strings={strings}
+        tooltipDelay="300"
         postUrl={TEST_URL}
+        onRatingSet={({ rating, comment }) => {
+            console.log('onRatingSet rating:', rating, 'comment:', comment);
+        }}
+        onRatingHover={({ rating }) => {
+            console.log('onRatingHover rating:', rating);
+        }}
+        onReviewLoad={({ hasRated, rating }) => {
+            console.log('onReviewLoad hasRated:', hasRated, ' rating:', rating);
+        }}
     />,
     document.getElementById('root')
 );

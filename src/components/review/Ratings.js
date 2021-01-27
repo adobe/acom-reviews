@@ -13,8 +13,11 @@ const Ratings = ({
     starString,
     starStringPlural,
     tooltips,
+    tooltipDelay,
 }) => {
     const [currentRating, setCurrentRating] = useState(rating);
+    const [hoverIndex, setHoverIndex] = useState(null);
+    const [timeoutId, setTimeoutId] = useState(null);
     const [keyboardFocusIndex, setKeyboardFocusIndex] = useState(0);
     const [mouseDown, setMouseDown] = useState(false);
     const [fieldSetRef, fieldSetMouseOut] = useHover();
@@ -31,14 +34,31 @@ const Ratings = ({
             if (fieldSetMouseOut.event.target.value) {
                 const hoveredRating = parseInt(fieldSetMouseOut.event.target.value, 10);
                 setCurrentRating(hoveredRating);
-                if (onRatingHover) onRatingHover(hoveredRating);
+                if (onRatingHover) onRatingHover({ rating: hoveredRating });
+
+                // Delay display of tooltips unless one is currently showing
+                if (hoverIndex) {
+                    clearTimeout(timeoutId);
+                    setTimeoutId(null);
+                    setHoverIndex(hoveredRating);
+                } else {
+                    setTimeoutId(
+                        setTimeout(() => {
+                            setHoverIndex(hoveredRating);
+                        }, tooltipDelay)
+                    );
+                }
             }
+        }
+
+        if (!fieldSetMouseLeave.hovering) {
+            setHoverIndex(null);
         }
 
         if (!fieldSetMouseLeave.hovering && rating !== currentRating) {
             setCurrentRating(rating);
         }
-    }, [fieldSetMouseOut.hovering, fieldSetMouseLeave.hovering]);
+    }, [fieldSetMouseOut.hovering, fieldSetMouseLeave.hovering, hoverIndex]);
 
     useEffect(() => {
         setCurrentRating(rating);
@@ -84,6 +104,8 @@ const Ratings = ({
             <RatingInput
                 key={`rating-${i}`}
                 isActive={i <= currentRating}
+                isHovering={hoverIndex === i}
+                isInteractive={isInteractive}
                 index={i}
                 onClick={handleClick}
                 hasKeyboardFocus={keyboardFocusIndex === i}
@@ -102,6 +124,7 @@ const Ratings = ({
             onFocus={onFocus}
             onMouseDown={onMouseDown}
             onBlur={onBlur}
+            disabled={!isInteractive}
         >
             {starsLegend && <legend>{starsLegend}</legend>}
             {ratings}
