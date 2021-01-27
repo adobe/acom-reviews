@@ -7,6 +7,8 @@ const RatingInput = ({
     index,
     hasKeyboardFocus,
     isActive,
+    isHovering,
+    isInteractive,
     onClick,
     starString,
     starStringPlural,
@@ -30,7 +32,9 @@ const RatingInput = ({
             name="rating"
             aria-label={label}
             type="radio"
-            className={`${tooltip ? 'tooltip ' : ''}${isActive ? ' is-Active' : ''}${
+            className={`${isInteractive && tooltip ? 'tooltip ' : ''}${
+                isHovering ? 'is-hovering' : ''
+            }${isActive ? ' is-Active' : ''}${
                 hasKeyboardFocus ? ' has-keyboard-focus' : ''
             }`}
             onClick={handleClick}

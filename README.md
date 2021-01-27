@@ -21,17 +21,53 @@ import { HelixReview } from 'acom-review-component';
 
 render(
     <HelixReview
-        productLabel="Convert PDF Review"
-        commentThreshold={COMMENT_THRESHOLD}
-        lang="en-US"
-        postAuth={POST_AUTH}
-        reviewLocation={REVIEW_LOCATION}
-        reviewTitle="Rate your experience"
-        sheet={SHEET}
-        postUrl={TEST_URL}
+        // How long to wait before submitting rating above commentThreshold (in ms)
+        clickTimeout = 5000
+        // Ratings above this number will not require a comment
+        commentThreshold = 3
+        // Once a rating has been selected, should the title be displayed on reload
+        hideTitleOnReload = true
+        // How long before tooltips should display on hover (in ms)
+        tooltipDelay="300"
+        lang = "en_US"
+        maxRating = 5 // maximum number of ratings (stars)
+        onRatingHover = {({ rating }) => {
+            // current rating user is hovering over
+            console.log('onRatingHover rating:', rating);
+        }}
+        onRatingSet={({ rating, comment }) => {
+            // callback when user has selected a rating
+            console.log('onRatingSet rating:', rating, 'comment:', comment);
+        }}
+        onReviewLoad={({ hasRated, rating }) => {
+            // callback when rating loads.  Rating only set if the user has already selected a rating
+            console.log('onReviewLoad hasRated:', hasRated, ' rating:', rating);
+        }}
+        postAuth=""
+        postUrl=""
+        productJson={{}}
+        reviewDomain=""
+        reviewPath=""
+        sheet=""
+        strings={{}} // see below
+        visitorId=""
     />,
-    document.getElementById('root')
+    document.getElementById('root');
 );
+
+const strings = {
+    commentLabel: 'Review Feedback',
+    placeholder: 'Please give us your feedback',
+    review: 'vote',
+    reviewPlural: 'votes',
+    reviewTitle: 'Rate Your Experience',
+    sendCta: 'Send',
+    star: 'star',
+    starPlural: 'stars',
+    starsLegend: 'Choose a star rating',
+    tooltips: ['Horrible', 'Poor', 'Ok', 'Good', 'Great'],
+    thankYou: 'Thank you for your feedback!',
+};
 ```
 
 ### Review Method
@@ -44,18 +80,22 @@ import { Review } from 'acom-review-component';
 
 render(
     <Review
-        averageRating={avgRating}
-        commentThreshold={commentThreshold}
-        initialRating={rating}
-        maxRating={maxRating}
-        onRatingSet={onRatingSet}
-        setAverageRating={setAvgRating}
-        setTotalReviews={setTotalReviews}
-        staticRating={rating}
-        strings={strings}
-        totalReviews={totalReviews}
+        averageRating
+        clickTimeout
+        commentThreshold
+        displayRatingSummary
+        hideTitleOnReload
+        initialRating
+        maxRating
+        onRatingSet
+        onRatingHover
+        setAverageRating
+        setTotalReviews
+        strings
+        staticRating
+        totalReviews
     />,
-    document.getElementById('root')
+    document.getElementById('root');
 );
 ```
 
