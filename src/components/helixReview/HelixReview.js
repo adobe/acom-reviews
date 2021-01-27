@@ -5,12 +5,14 @@ import setJsonLdProductInfo from '../../utils/setJsonLdProductInfo';
 import Review from '../review/Review';
 
 const HelixReview = ({
+    clickTimeout = 5000,
     commentThreshold = 3,
     hideTitleOnReload,
     lang,
     maxRating = 5,
     onRatingHover,
     onRatingSet: onRatingSetCallback,
+    onReviewLoad,
     postAuth,
     postUrl,
     productJson,
@@ -18,6 +20,7 @@ const HelixReview = ({
     reviewPath,
     sheet,
     strings,
+    tooltipDelay = 300,
     visitorId,
 }) => {
     const [rating, setRating] = useState();
@@ -36,6 +39,12 @@ const HelixReview = ({
             setTotalReviews(localData.totalReviews);
             localDataTotalReviews = localData.totalReviews;
         }
+        if (onReviewLoad)
+            onReviewLoad({
+                hasRated: !!localData,
+                rating: localData ? localData.rating : undefined,
+            });
+
         // eslint-disable-next-line no-use-before-define
         getHelixData(localDataTotalReviews, !!localData);
     }, []);
@@ -76,7 +85,11 @@ const HelixReview = ({
         }
     };
 
-    const onRatingSet = (newRating, comment, updatedTotalReviews) => {
+    const onRatingSet = ({
+        rating: newRating,
+        comment,
+        totalReviews: updatedTotalReviews,
+    }) => {
         // When onRatingSet is called, totalReviews hasn't updated yet as it's async
         setLocalStorage(reviewPath, {
             rating: newRating,
@@ -93,8 +106,7 @@ const HelixReview = ({
             visitorId,
         });
 
-        if (onRatingSetCallback)
-            onRatingSetCallback(newRating, comment, updatedTotalReviews);
+        if (onRatingSetCallback) onRatingSetCallback({ rating: newRating, comment });
     };
 
     return (
@@ -102,6 +114,7 @@ const HelixReview = ({
             {displayReviewComp && (
                 <Review
                     averageRating={avgRating}
+                    clickTimeout={clickTimeout}
                     commentThreshold={commentThreshold}
                     hideTitleOnReload={hideTitleOnReload}
                     initialRating={initialRating}
@@ -113,6 +126,7 @@ const HelixReview = ({
                     displayRatingSummary={displayRatingSummary}
                     staticRating={rating}
                     strings={strings}
+                    tooltipDelay={tooltipDelay}
                     totalReviews={totalReviews}
                 />
             )}
