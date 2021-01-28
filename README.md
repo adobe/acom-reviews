@@ -43,12 +43,12 @@ render(
             // callback when rating loads.  Rating only set if the user has already selected a rating
             console.log('onReviewLoad hasRated:', hasRated, ' rating:', rating);
         }}
-        postAuth=""
+        postAuth="" // only used for dev endpoint
         postUrl=""
         productJson={{}}
         reviewDomain=""
         reviewPath=""
-        sheet=""
+        sheet="" // only used for dev endpoint
         strings={{}} // see below
         visitorId=""
     />,
