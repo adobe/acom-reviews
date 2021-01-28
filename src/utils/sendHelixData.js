@@ -9,6 +9,8 @@ const sendHelixData = ({
     postUrl,
     visitorId,
 } = {}) => {
+    const isDev = !!(postAuth && sheet);
+
     const data = [
         { name: 'Timestamp', value: getDate() },
         { name: 'Rating', value: rating },
@@ -26,13 +28,14 @@ const sendHelixData = ({
         data.push({ name: 'VisitorId', value: visitorId });
     }
 
-    const body = { sheet, data };
+    const body = { data };
+    if (isDev) body.sheet = sheet;
 
     fetch(postUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: postAuth,
+            ...(isDev && { Authorization: postAuth }),
         },
         body: JSON.stringify(body),
     });
