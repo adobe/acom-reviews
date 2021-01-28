@@ -103,6 +103,7 @@ const HelixReview = ({
             rating: newRating,
             sheet,
             postUrl,
+            reviewPath,
             visitorId,
         });
 

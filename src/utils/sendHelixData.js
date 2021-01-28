@@ -7,6 +7,7 @@ const sendHelixData = ({
     rating,
     sheet,
     postUrl,
+    reviewPath,
     visitorId,
 } = {}) => {
     const isDev = !!(postAuth && sheet);
@@ -31,7 +32,9 @@ const sendHelixData = ({
     const body = { data };
     if (isDev) body.sheet = sheet;
 
-    fetch(postUrl, {
+    const url = isDev ? postUrl : `${postUrl}/${reviewPath}`;
+
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
