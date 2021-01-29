@@ -9,6 +9,8 @@ function RatingSummary({
 }) {
     const averageRatingRounded = Math.round(averageRating * 10) / 10;
 
+    if (!averageRating) return <></>;
+
     // placeholder
     return (
         <div className="hlx-ReviewStats is-Visible">
