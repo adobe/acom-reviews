@@ -3,6 +3,8 @@ import React from 'react';
 const KEY_ENTER = 13;
 const KEY_SPACE = 32;
 
+const isIE11 = navigator.userAgent.match('Trident/7').length > 0;
+
 const RatingInput = ({
     index,
     hasKeyboardFocus,
@@ -29,6 +31,7 @@ const RatingInput = ({
     return (
         <input
             data-tooltip={tooltip}
+            title={isIE11 ? tooltip : false}
             name="rating"
             aria-label={label}
             type="radio"
