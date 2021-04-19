@@ -22,6 +22,7 @@ const HelixReview = ({
     strings,
     tooltipDelay = 300,
     visitorId,
+    initialValue,
 }) => {
     const [rating, setRating] = useState();
     const [initialRating, setInitialRating] = useState();
@@ -67,7 +68,8 @@ const HelixReview = ({
                             if (total > localDataTotalReviews) setTotalReviews(total);
                             setDisplayRatingSummary(true);
                             setDisplayReviewComp(true);
-                            if (!hasLocalData) setInitialRating(Math.round(average));
+                            if (!hasLocalData) setInitialRating(initialValue != undefined ? initialValue : Math.round(average));
+
 
                             if (productJson) {
                                 setJsonLdProductInfo(productJson, average, total);
@@ -129,6 +131,7 @@ const HelixReview = ({
                     strings={strings}
                     tooltipDelay={tooltipDelay}
                     totalReviews={totalReviews}
+                    initialValue={initialValue}
                 />
             )}
         </>
