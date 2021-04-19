@@ -1,9 +1,8 @@
 import React from 'react';
+import isIE11 from '../../utils/isIE11';
 
 const KEY_ENTER = 13;
 const KEY_SPACE = 32;
-
-const isIE11 = window.navigator.userAgent.match('Trident/7') != null;
 
 const RatingInput = ({
     index,

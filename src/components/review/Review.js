@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addToAverage } from '../../utils/utils';
+import sanitizeComment from '../../utils/sanitizeComment';
 import Comments from './Comments';
 import Ratings from './Ratings';
 import RatingSummary from './RatingSummary';
@@ -147,7 +148,7 @@ function Review({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onRatingSet({ rating, comment, totalReviews });
+        onRatingSet({ rating, comment: sanitizeComment(comment), totalReviews });
         setDisplayThankYou(true);
     };
 
