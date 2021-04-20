@@ -7,6 +7,11 @@ There are two main parts to this project:
 1. `Review` - A component used to display review data.
 2. `HelixReview` - Used to wrap `Review` and handle GET and POST requests of Helix-based data.
 
+## Releases
+1.7.2 - Ability to set initialValue, comments are now sanitized
+1.6.2 - IE11 Bug Fixes
+
+
 ## Using
 ### Install
 `npm install acom-review-component`

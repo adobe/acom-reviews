@@ -68,8 +68,12 @@ const HelixReview = ({
                             if (total > localDataTotalReviews) setTotalReviews(total);
                             setDisplayRatingSummary(true);
                             setDisplayReviewComp(true);
-                            if (!hasLocalData) setInitialRating(initialValue != undefined ? initialValue : Math.round(average));
-
+                            if (!hasLocalData)
+                                setInitialRating(
+                                    initialValue !== undefined
+                                        ? initialValue
+                                        : Math.round(average)
+                                );
 
                             if (productJson) {
                                 setJsonLdProductInfo(productJson, average, total);
