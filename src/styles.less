@@ -24,6 +24,8 @@
 @tooltipTransitionTime: 0.3s;
 @tooltipZIndex: 50;
 
+@rating-comments-height: 58px;
+
 .appearanceNoneMixin {
     -webkit-appearance: none;
     appearance: none;
@@ -140,7 +142,7 @@
     input[type='submit'] {
         position: absolute;
         right: 17px;
-        bottom: 1px;
+        top: calc(@rating-comments-height + 1px);
         width: auto;
         background: @commentBgColor;
         border: none;
@@ -162,7 +164,7 @@
 
     #ctaCover {
         background-color: @commentBgColor;
-        bottom: 0;
+        top: @rating-comments-height;
         cursor: text;
         height: 22px;
         position: absolute;
@@ -172,7 +174,7 @@
 
     textarea#rating-comments {
         width: 310px;
-        height: 58px;
+        height: @rating-comments-height;
         border: none;
         outline: none;
         padding: 6px 8px 0 8px;
