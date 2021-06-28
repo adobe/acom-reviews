@@ -24,7 +24,9 @@
 @tooltipTransitionTime: 0.3s;
 @tooltipZIndex: 50;
 
-@rating-comments-height: 58px;
+@ratingCommentsHeight: 58px;
+@ctaCommentHeight: 22px;
+@commentFieldsHeight: @ratingCommentsHeight + @ctaCommentHeight;
 
 .appearanceNoneMixin {
     -webkit-appearance: none;
@@ -129,7 +131,7 @@
     margin-top: 12px;
     border-radius: 4px;
     border: 2px solid #b3b3b3;
-    height: 80px;
+    height: @commentFieldsHeight;
 
     &.has-focus {
         border: @focusOutline;
@@ -142,7 +144,7 @@
     input[type='submit'] {
         position: absolute;
         right: 17px;
-        top: calc(@rating-comments-height + 1px);
+        top: calc(@ratingCommentsHeight + 1px);
         width: auto;
         background: @commentBgColor;
         border: none;
@@ -164,9 +166,9 @@
 
     #ctaCover {
         background-color: @commentBgColor;
-        top: @rating-comments-height;
+        top: calc(@commentFieldsHeight - @ctaCommentHeight);
         cursor: text;
-        height: 22px;
+        height: @ctaCommentHeight;
         position: absolute;
         right: 17px;
         width: 94%;
@@ -174,7 +176,7 @@
 
     textarea#rating-comments {
         width: 310px;
-        height: @rating-comments-height;
+        height: @ratingCommentsHeight;
         border: none;
         outline: none;
         padding: 6px 8px 0 8px;
