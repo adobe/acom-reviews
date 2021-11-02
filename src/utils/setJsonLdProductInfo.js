@@ -6,7 +6,7 @@ const setJsonLdProductInfo = (productJson, average, total) => {
     productJson.aggregateRating = {
         '@type': 'AggregateRating',
         ratingValue: average,
-        reviewCount: total,
+        ratingCount: total,
     };
     const script = document.createElement('script');
     script.setAttribute('type', 'application/ld+json');
