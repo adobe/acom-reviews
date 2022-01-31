@@ -51,5 +51,5 @@ render(
             console.log('onReviewLoad hasRated:', hasRated, ' rating:', rating);
         }}
     />,
-    document.getElementById('root')
+    document.querySelector('main')
 );
