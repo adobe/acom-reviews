@@ -8,7 +8,7 @@
   },
   "description": "A collection of components used to populate product review information on adobe.com.",
   "main": "dist/main.js",
-  "hlx": "dist/hlx.js",
+  "hlx": "hlx.js",
   "targets": {
     "hlx": {
       "engines": {
