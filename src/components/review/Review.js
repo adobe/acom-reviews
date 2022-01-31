@@ -123,7 +123,9 @@ function Review({
             setTotalReviews(updatedTotalReviews);
         }
 
-        setAverageRating(addToAverage(newRating, averageRating, updatedTotalReviews));
+        setAverageRating(
+            addToAverage(newRating, Number(averageRating), updatedTotalReviews)
+        );
 
         if (!isKeyboardSelection && newRating > commentThreshold && !displayComments) {
             handleClickAboveCommentThreshold(newRating, updatedTotalReviews);

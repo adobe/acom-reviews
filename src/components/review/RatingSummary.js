@@ -7,7 +7,7 @@ function RatingSummary({
     reviewString,
     reviewStringPlural,
 }) {
-    const averageRatingRounded = Math.round(averageRating * 10) / 10;
+    const averageRatingRounded = Math.round(Number(averageRating) * 10) / 10;
 
     if (!averageRating) return <></>;
 
