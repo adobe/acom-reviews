@@ -9,8 +9,13 @@ There are two main parts to this project:
 
 ## Releases
 2.0.3 - Helix 3 compatiblity - gracefully handle string to number conversions
+
+2.0.1 - Fixed build issues for consumers
+
 2.0.0 - Fixed vulnerabilities, changed `reviewCount` to `ratingCount`, fixed styling issues on mobile
+
 1.7.2 - Ability to set initialValue, comments are now sanitized
+
 1.6.2 - IE11 Bug Fixes
 
 
