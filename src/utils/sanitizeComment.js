@@ -1,5 +1,3 @@
-import isIE11 from './isIE11';
-
 const invalidUrlChars = /["<>\\^`{|}]/g;
 
 // modified from https://gist.github.com/dperini/729294
@@ -38,9 +36,7 @@ const validUrl = new RegExp(
     'ig'
 );
 
-const allowedChars = isIE11
-    ? /[a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s.]/g
-    : /[\p{Letter}\d\s.]/gu;
+const allowedChars = /[a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s.]/g;
 
 const getUniqueArray = (arr) => {
     if (!Array.isArray(arr)) return [];
