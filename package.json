@@ -17,7 +17,7 @@
       }
     }
   },
-  "browserslist": [ "defaults" ],
+  "browserslist": [ "defaults", "IE 11" ],
   "dependencies": {
     "@swc/helpers": "^0.3.2"
   },
