@@ -8,6 +8,8 @@ There are two main parts to this project:
 2. `HelixReview` - Used to wrap `Review` and handle GET and POST requests of Helix-based data.
 
 ## Releases
+2.0.7 - Fix to calculations to better handle hlx3 strings
+
 2.0.3 - Helix 3 compatiblity - gracefully handle string to number conversions
 
 2.0.1 - Fixed build issues for consumers

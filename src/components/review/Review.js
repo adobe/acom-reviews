@@ -115,7 +115,7 @@ function Review({
 
         clearCallbacks();
 
-        let updatedTotalReviews = totalReviews;
+        let updatedTotalReviews = Number(totalReviews);
 
         if (!totalHasBeenUpdated) {
             setTotalHasBeenUpdated(true);
